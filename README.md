@@ -22,30 +22,6 @@ npm install chistate
 
 👉 Required when using in Next.js (App Router)
 
----
-
-### ✅ Use `chiLog`, `chiComputed` OUTSIDE components
-
-```ts
-// ✅ Correct (global scope)
-const double = chiComputed(() => count.value * 2);
-
-chiLog(() => {
-  console.log(count.value);
-});
-```
-
-```tsx
-// ❌ Wrong (inside component)
-export default function App() {
-  chiLog(() => { ... }) // ❌ can cause memory leaks
-}
-```
-
-👉 These should run once, not on every render.
-
----
-
 ## 🧠 Philosophy
 
 > Just mutate variables. UI updates automatically.
@@ -149,6 +125,30 @@ chiBatch(() => {
   count.value++;
 });
 ```
+
+---
+
+### ✅ Use `chiLog`, `chiComputed` OUTSIDE components
+
+```ts
+// ✅ Correct (global scope)
+const double = chiComputed(() => count.value * 2);
+
+chiLog(() => {
+  console.log(count.value);
+});
+```
+
+```tsx
+// ❌ Wrong (inside component)
+export default function App() {
+  chiLog(() => { ... }) // ❌ can cause memory leaks
+}
+```
+
+👉 These should run once, not on every render.
+
+---
 
 ---
 
