@@ -259,8 +259,7 @@ Rohit Ambawata
 
 # ⭐ Support
 
-If you like it, give a ⭐ on GitHub!
-
+If you like it, give a ⭐ on [Github!](https://github.com/rohitLovesKrishna/chistate).
 
 ## Contributing
 
