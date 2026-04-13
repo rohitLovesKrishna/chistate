@@ -2,7 +2,12 @@
 
 > ⚡ Reactive state. No hooks. No boilerplate.
 
----
+# 🎮 Tic Tac Toe Game using React `chiState`
+
+## 🚀 Live Project
+
+https://codesandbox.io/p/devbox/hrv2zd
+
 
 ## 🚀 Install
 
@@ -259,7 +264,7 @@ Rohit Ambawata
 
 # ⭐ Support
 
-If you like it, give a ⭐ on [Github!](https://github.com/rohitLovesKrishna/chistate).
+If you like it, give a ⭐ on [Github!](https://github.com/rohitLovesKrishna/chistate)
 
 ## Contributing
 
