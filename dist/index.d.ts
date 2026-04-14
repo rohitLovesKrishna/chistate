@@ -10,7 +10,8 @@ declare function chiView(renderFn: () => ReactNode): React.ReactNode;
 declare function chiComputed<T>(fn: () => T): ChiState<T>;
 declare function chiLog(fn: () => void | (() => void)): void;
 type ChiProps<T> = {
-    value: ChiState<T>;
+    value?: ChiState<T>;
+    watch?: () => ReactNode;
     as?: React.ElementType;
     className?: string;
     fallback?: ReactNode;

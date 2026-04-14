@@ -88,12 +88,17 @@ function chiLog(fn) {
 function Chi(props) {
   const {
     value,
+    watch,
     as: Tag = "span",
     className,
     fallback = null,
     format
   } = props;
   return chiView(() => {
+    if (watch) {
+      return watch();
+    }
+    if (!value) return null;
     const current = value.value;
     const content = current == null ? fallback : format ? format(current) : String(current);
     return /* @__PURE__ */ jsx(Tag, { className, children: content });
