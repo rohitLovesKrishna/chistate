@@ -1,7 +1,8 @@
 "use client";
 
-// src/index.ts
+// src/index.tsx
 import { useState, useRef } from "react";
+import { jsx } from "react/jsx-runtime";
 var currentListener = null;
 var isBatching = false;
 var queue = /* @__PURE__ */ new Set();
@@ -44,9 +45,7 @@ function chiView(renderFn) {
   const listenerRef = useRef(null);
   if (!listenerRef.current) {
     listenerRef.current = {
-      fn: () => {
-        forceRender((x) => x + 1);
-      },
+      fn: () => forceRender((x) => x + 1),
       deps: /* @__PURE__ */ new Set()
     };
   }
@@ -86,7 +85,22 @@ function chiLog(fn) {
   }
   run();
 }
+function Chi(props) {
+  const {
+    value,
+    as: Tag = "span",
+    className,
+    fallback = null,
+    format
+  } = props;
+  return chiView(() => {
+    const current = value.value;
+    const content = current == null ? fallback : format ? format(current) : String(current);
+    return /* @__PURE__ */ jsx(Tag, { className, children: content });
+  });
+}
 export {
+  Chi,
   chiBatch,
   chiComputed,
   chiLog,

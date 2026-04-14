@@ -18,9 +18,10 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/index.ts
+// src/index.tsx
 var index_exports = {};
 __export(index_exports, {
+  Chi: () => Chi,
   chiBatch: () => chiBatch,
   chiComputed: () => chiComputed,
   chiLog: () => chiLog,
@@ -29,6 +30,7 @@ __export(index_exports, {
 });
 module.exports = __toCommonJS(index_exports);
 var import_react = require("react");
+var import_jsx_runtime = require("react/jsx-runtime");
 var currentListener = null;
 var isBatching = false;
 var queue = /* @__PURE__ */ new Set();
@@ -71,9 +73,7 @@ function chiView(renderFn) {
   const listenerRef = (0, import_react.useRef)(null);
   if (!listenerRef.current) {
     listenerRef.current = {
-      fn: () => {
-        forceRender((x) => x + 1);
-      },
+      fn: () => forceRender((x) => x + 1),
       deps: /* @__PURE__ */ new Set()
     };
   }
@@ -113,8 +113,23 @@ function chiLog(fn) {
   }
   run();
 }
+function Chi(props) {
+  const {
+    value,
+    as: Tag = "span",
+    className,
+    fallback = null,
+    format
+  } = props;
+  return chiView(() => {
+    const current = value.value;
+    const content = current == null ? fallback : format ? format(current) : String(current);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, { className, children: content });
+  });
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Chi,
   chiBatch,
   chiComputed,
   chiLog,
