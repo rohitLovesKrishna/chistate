@@ -20,7 +20,12 @@
     "state",
     "react",
     "signals",
-    "zustand"
+    "zustand",
+    "react",
+    "nextjs",
+    "redux",
+    "store",
+    "management"
   ],
   "devDependencies": {
     "tsup": "^8.5.1",
