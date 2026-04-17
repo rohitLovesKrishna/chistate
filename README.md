@@ -186,9 +186,16 @@ const user = chiState(null);
 
 ### Format
 
-```tsx
-<Chi value={price} format={(v) => `₹${v}`} />
+> **Older Version-: // <= 0.1.3 (Avoid)
+```bash
+<Chi  value={price}  format={(v) =>  `₹${v}`}  />
+```
 
+> **Newer  Version-: // 0.2.1
+```bash
+<Chi  value={price}>
+{(v)=>`₹${v}`}
+</Chi>
 ```
 
 ----------
