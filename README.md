@@ -198,6 +198,49 @@ const user = chiState(null);
 </Chi>
 ```
 
+#  chiAudio → Simple Music Sysytem Handler. 
+```bash
+tracks = [{}] or [strings]
+const player = chiAudio({playlist:tracks})
+  player returns = {
+    audio,
+
+    playing,
+    loading,
+    muted,
+
+    length,
+    index,
+    current,
+
+    currentTime,
+    duration,
+    progress,
+    volume,
+    startTime,
+    endTime,
+
+    play,
+    pause,
+    toggle,
+
+    next,
+    prev,
+
+    seekTo,
+    seekPercent,
+
+    setVolume,
+    mute,
+    unmute,
+
+    setIndex,
+    destroy,
+  };
+
+  USAGE: player.length.value , player.toggle ,player.prev, player.next , player.startTime.value, player.endTime.value, player.seekTo(Number(e.target.value)), player.current.value.image | name | etc.
+```
+
 ----------
 
 # 3️⃣ chiView() → Reactive JSX Block
