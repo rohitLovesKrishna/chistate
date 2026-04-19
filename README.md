@@ -240,6 +240,33 @@ const player = chiAudio({playlist:tracks})
 
   USAGE: player.length.value , player.toggle ,player.prev, player.next , player.startTime.value, player.endTime.value, player.seekTo(Number(e.target.value)), player.current.value.image | name | etc.
 ```
+## USE OF AUDIO LIBRARY - Simple
+
+```bash
+"use client";
+import {Chi, chiAudio} from "chistate";
+
+const player = chiAudio({
+  playlist:["/music/all.mp3","/music/all2.mp4"]
+})
+
+
+export default function Home() {
+  return (
+    <main className="w-screen h-screen">
+      <div className="flex gap-2.5">
+        <span><Chi>{()=>player.startTime.value}</Chi></span>
+        <span><Chi>{()=>player.endTime.value}</Chi></span>
+      </div>
+      <div className="flex gap-2.5">
+        <button onClick={()=>player.prev()}>Prev</button>
+        <button onClick={()=>player.next()}>Next</button>
+      </div>
+      <button onClick={()=>player.toggle()}>Play/Pause</button>
+    </main>
+  );
+}
+```
 
 ----------
 
