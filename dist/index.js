@@ -1,8 +1,10 @@
 "use strict";
 "use client";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -16,21 +18,31 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.tsx
 var index_exports = {};
 __export(index_exports, {
   Chi: () => Chi,
+  ChiDrag: () => ChiDrag,
   chiAudio: () => chiAudio,
   chiBatch: () => chiBatch,
   chiComputed: () => chiComputed,
   chiLog: () => chiLog,
+  chiRecorder: () => chiRecorder,
   chiState: () => chiState,
   chiView: () => chiView
 });
 module.exports = __toCommonJS(index_exports);
-var import_react = require("react");
+var import_react = __toESM(require("react"));
 var import_jsx_runtime = require("react/jsx-runtime");
 var currentListener = null;
 var isBatching = false;
@@ -79,10 +91,7 @@ function chiState(initialValue) {
       const saved = localStorage.getItem(storageKey);
       if (saved !== null) {
         try {
-          restoreCache.set(
-            storageKey,
-            JSON.parse(saved)
-          );
+          restoreCache.set(storageKey, JSON.parse(saved));
         } catch {
         }
       }
@@ -91,10 +100,7 @@ function chiState(initialValue) {
           state.value = restoreCache.get(storageKey);
         }
         chiLog(() => {
-          localStorage.setItem(
-            storageKey,
-            JSON.stringify(state.value)
-          );
+          localStorage.setItem(storageKey, JSON.stringify(state.value));
         });
       });
       return state;
@@ -105,10 +111,7 @@ function chiState(initialValue) {
       const saved = sessionStorage.getItem(storageKey);
       if (saved !== null) {
         try {
-          restoreCache.set(
-            storageKey,
-            JSON.parse(saved)
-          );
+          restoreCache.set(storageKey, JSON.parse(saved));
         } catch {
         }
       }
@@ -117,10 +120,7 @@ function chiState(initialValue) {
           state.value = restoreCache.get(storageKey);
         }
         chiLog(() => {
-          sessionStorage.setItem(
-            storageKey,
-            JSON.stringify(state.value)
-          );
+          sessionStorage.setItem(storageKey, JSON.stringify(state.value));
         });
       });
       return state;
@@ -174,9 +174,7 @@ function chiLog(fn) {
   run();
 }
 function useChiList(list, renderItem) {
-  const cacheRef = (0, import_react.useRef)(
-    /* @__PURE__ */ new Map()
-  );
+  const cacheRef = (0, import_react.useRef)(/* @__PURE__ */ new Map());
   const cache = cacheRef.current;
   const nextCache = /* @__PURE__ */ new Map();
   const output = list.map((item, index) => {
@@ -214,9 +212,7 @@ function Chi(props) {
       if (Array.isArray(current)) {
         const list = current;
         if (isDev && list.length > 100) {
-          console.info(
-            "[chistate] Optimized array rendering enabled."
-          );
+          console.info("[chistate] Optimized array rendering enabled.");
         }
         return useChiList(
           list,
@@ -228,9 +224,7 @@ function Chi(props) {
     const type = typeof current;
     const isPrimitive = type === "string" || type === "number" || type === "boolean" || type === "bigint" || type === "symbol";
     if (isPrimitive) {
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, { className, children: String(
-        current
-      ) });
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, { className, children: String(current) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, { className, children: JSON.stringify(current) });
   });
@@ -266,20 +260,13 @@ function chiAudio(config) {
   const playing = chiState(false);
   const loading = chiState(false);
   const muted = chiState(false);
-  const index = chiState(
-    Math.max(
-      0,
-      Math.min(initialIndex, list.length - 1)
-    )
-  );
+  const index = chiState(Math.max(0, Math.min(initialIndex, list.length - 1)));
   const currentTime = chiState(0);
   const duration = chiState(0);
   const volume = chiState(initialVolume);
   const startTime = chiComputed(() => formatTime(currentTime.value));
   const endTime = chiComputed(() => formatTime(duration.value));
-  const length = chiComputed(
-    () => list.length
-  );
+  const length = chiComputed(() => list.length);
   const current = chiComputed(
     () => list[index.value] ?? {
       id: 0,
@@ -351,16 +338,12 @@ function chiAudio(config) {
     playing.value ? pause() : play();
   };
   const setIndex = async (i, auto = true) => {
-    if (i < 0 || i >= list.length)
-      return;
+    if (i < 0 || i >= list.length) return;
     index.value = i;
     await load(auto);
   };
   const next = async () => {
-    await setIndex(
-      index.value + 1 >= list.length ? 0 : index.value + 1,
-      true
-    );
+    await setIndex(index.value + 1 >= list.length ? 0 : index.value + 1, true);
   };
   const prev = async () => {
     await setIndex(
@@ -374,15 +357,10 @@ function chiAudio(config) {
     currentTime.value = sec;
   };
   const seekPercent = (percent) => {
-    seekTo(
-      percent / 100 * duration.value
-    );
+    seekTo(percent / 100 * duration.value);
   };
   const setVolume = (v) => {
-    const safe = Math.max(
-      0,
-      Math.min(100, v)
-    );
+    const safe = Math.max(0, Math.min(100, v));
     volume.value = safe;
     if (!audio) return;
     audio.volume = safe / 100;
@@ -439,13 +417,123 @@ function chiAudio(config) {
     destroy
   };
 }
+function chiRecorder(config = {}) {
+  const {
+    mimeType = "audio/webm"
+  } = config;
+  const isRecording = chiState(false);
+  const audioBlob = chiState(null);
+  const audioUrl = chiState("");
+  let mediaRecorder = null;
+  let chunks = [];
+  let stream = null;
+  const start = async () => {
+    if (typeof window === "undefined") return;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: true
+      });
+      chunks = [];
+      mediaRecorder = new MediaRecorder(stream, {
+        mimeType
+      });
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunks.push(e.data);
+        }
+      };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, {
+          type: mimeType
+        });
+        audioBlob.value = blob;
+        if (audioUrl.value) {
+          URL.revokeObjectURL(audioUrl.value);
+        }
+        audioUrl.value = URL.createObjectURL(blob);
+        isRecording.value = false;
+        stream?.getTracks().forEach((t) => t.stop());
+      };
+      mediaRecorder.start();
+      isRecording.value = true;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const stop = async () => {
+    if (!mediaRecorder) return;
+    mediaRecorder.stop();
+  };
+  const download = (filename = `recording-${Date.now()}.webm`) => {
+    if (!audioBlob.value) return;
+    const link = document.createElement("a");
+    link.href = audioUrl.value;
+    link.download = filename;
+    link.click();
+  };
+  return {
+    isRecording,
+    audioBlob,
+    audioUrl,
+    start,
+    stop,
+    download
+  };
+}
+function ChiDrag({
+  children,
+  defaultX = 30,
+  defaultY = 20
+}) {
+  const drag = chiState(false);
+  const pos = chiState({ x: defaultX, y: defaultY });
+  const offset = chiState({ x: 0, y: 0 });
+  chiLog(() => {
+    const move = (e) => {
+      if (!drag.value) return;
+      pos.value = {
+        x: e.clientX - offset.value.x,
+        y: e.clientY - offset.value.y
+      };
+    };
+    const up = () => drag.value = false;
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+    return () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+    };
+  });
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Chi, { children: () => {
+    const child = children();
+    return import_react.default.cloneElement(child, {
+      onMouseDown: (e) => {
+        offset.value = {
+          x: e.clientX - pos.value.x,
+          y: e.clientY - pos.value.y
+        };
+        drag.value = true;
+      },
+      style: {
+        ...child.props.style || {},
+        position: "absolute",
+        left: pos.value.x,
+        top: pos.value.y,
+        cursor: drag.value ? "grabbing" : "grab",
+        userSelect: "none"
+      }
+    });
+  } });
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Chi,
+  ChiDrag,
   chiAudio,
   chiBatch,
   chiComputed,
   chiLog,
+  chiRecorder,
   chiState,
   chiView
 });

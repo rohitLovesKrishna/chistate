@@ -1,3 +1,4 @@
+import * as react_jsx_runtime from 'react/jsx-runtime';
 import React, { ReactNode } from 'react';
 
 type ChiState<T> = {
@@ -80,5 +81,22 @@ declare function chiAudio(config: ChiAudioConfig): {
     setIndex: (i: number, auto?: boolean) => Promise<void>;
     destroy: () => void;
 };
+type ChiRecorderConfig = {
+    mimeType?: string;
+};
+type ChiRecorderReturn = {
+    isRecording: ChiState<boolean>;
+    audioBlob: ChiState<Blob | null>;
+    audioUrl: ChiState<string>;
+    start: () => Promise<void>;
+    stop: () => Promise<void>;
+    download: (filename?: string) => void;
+};
+declare function chiRecorder(config?: ChiRecorderConfig): ChiRecorderReturn;
+declare function ChiDrag({ children, defaultX, defaultY, }: {
+    children: () => React.ReactElement<any>;
+    defaultX?: number;
+    defaultY?: number;
+}): react_jsx_runtime.JSX.Element;
 
-export { type AudioTrack, type AudioTrackInput, Chi, type ChiState, chiAudio, chiBatch, chiComputed, chiLog, chiState, chiView };
+export { type AudioTrack, type AudioTrackInput, Chi, ChiDrag, type ChiState, chiAudio, chiBatch, chiComputed, chiLog, chiRecorder, chiState, chiView };
